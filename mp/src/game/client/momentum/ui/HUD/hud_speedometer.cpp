@@ -31,7 +31,7 @@ CHudSpeedMeter *g_pSpeedometer = nullptr;
 
 CHudSpeedMeter::CHudSpeedMeter(const char *pElementName)
     : CHudElement(pElementName), EditablePanel(g_pClientMode->GetViewport(), "HudSpeedMeter"), 
-    m_cvarTimeScale("mom_replay_timescale"), m_pRunStats(nullptr), m_pRunEntData(nullptr), m_iLastZone(0)
+    m_cvarTimeScale("mom_replay_timescale"), m_pRunStats(nullptr), m_pRunEntData(nullptr), m_iLastZone(0), m_bAutoLayout(true)
 {
     ListenForGameEvent("zone_exit");
     ListenForGameEvent("zone_enter");
@@ -191,6 +191,9 @@ void CHudSpeedMeter::PerformLayout()
 {
     EditablePanel::PerformLayout();
 
+    if (!m_bAutoLayout)
+        return;
+
     int iHeightAcc = 0;
     for (auto i = 0; i < m_LabelOrderList.Count(); i++)
     {
@@ -202,6 +205,25 @@ void CHudSpeedMeter::PerformLayout()
         }
     }
     SetTall(iHeightAcc);
+}
+
+void CHudSpeedMeter::ApplySettings(KeyValues *inResourceData) 
+{
+    m_bAutoLayout = inResourceData->GetBool("autolayout", true);
+    BaseClass::ApplySettings(inResourceData);
+}
+
+void CHudSpeedMeter::GetSettings(KeyValues *outResourceData) 
+{
+    BaseClass::GetSettings(outResourceData);
+    outResourceData->SetBool("autolayout", m_bAutoLayout);
+}
+
+void CHudSpeedMeter::InitSettings() 
+{
+    BEGIN_PANEL_SETTINGS()
+    {"autolayout", TYPE_BOOL},
+    END_PANEL_SETTINGS();
 }
 
 void CHudSpeedMeter::OnThink()

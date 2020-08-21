@@ -26,6 +26,9 @@ class CHudSpeedMeter : public CHudElement, public vgui::EditablePanel
     void ApplySchemeSettings(vgui::IScheme *pScheme) override;
     void OnReloadControls() override;
     void PerformLayout() override;
+    void ApplySettings(KeyValues *inResourceData) override;
+    void GetSettings(KeyValues *outResourceData) override;
+    void InitSettings() override;
 
     SpeedometerLabel *GetLabel(int index) { return m_Labels[index]; }
 
@@ -35,6 +38,8 @@ class CHudSpeedMeter : public CHudElement, public vgui::EditablePanel
 
   private:
     int m_iLastZone;
+
+    bool m_bAutoLayout;
 
     SpeedometerLabel *m_pAbsSpeedoLabel, *m_pHorizSpeedoLabel, *m_pVertSpeedoLabel, *m_pExplosiveJumpVelLabel,
                      *m_pLastJumpVelLabel, *m_pRampBoardVelLabel, *m_pRampLeaveVelLabel, *m_pStageEnterExitVelLabel;
