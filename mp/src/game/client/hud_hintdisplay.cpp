@@ -648,7 +648,7 @@ bool CHudHintKeyDisplay::SetHintText(const char *text)
     }
 
     // move ourselves relative to our start position
-    int newWide = m_iTextX + col2_x + widest2;
+    int newWide = col2_x + widest2;
     int newTall = col_y;
     int ox, oy;
     GetPos(ox, oy);
