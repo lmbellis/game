@@ -755,6 +755,7 @@ void CMomentumPlayer::CreateStartMark()
         if (m_pStartZoneMarks[m_Data.m_iCurrentTrack])
         {
             DevLog("Successfully created a starting mark!\n");
+            UTIL_HudHintText(this, "Start mark created");
         }
         else
         {
@@ -770,6 +771,7 @@ void CMomentumPlayer::ClearStartMark(int track)
         if (m_pStartZoneMarks[track])
             delete m_pStartZoneMarks[track];
         m_pStartZoneMarks[track] = nullptr;
+        UTIL_HudHintText(this, "Start mark cleared");
     }
 }
 
